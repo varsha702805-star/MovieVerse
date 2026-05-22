@@ -1,7 +1,12 @@
 import axios from 'axios'
 
-const resolvedHostname = window.location.hostname === 'localhost' ? '127.0.0.1' : window.location.hostname
-const API_BASE_URL = import.meta.env.VITE_API_URL || `http://${resolvedHostname}:5000/api`
+const isLocal = window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' || 
+                window.location.hostname.startsWith('192.168.') || 
+                window.location.hostname.startsWith('10.')
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 
+                     (isLocal ? `http://${window.location.hostname}:5000/api` : 'https://movieverse-server-smq0.onrender.com/api')
 
 const api = axios.create({
   baseURL: API_BASE_URL,
