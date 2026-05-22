@@ -14,7 +14,8 @@ const register = async (req, res) => {
     })
     res.json({ message: 'Registered successfully!' })
   } catch (err) {
-    res.status(500).json({ message: 'Server error' })
+    console.error('Register error details:', err)
+    res.status(500).json({ message: 'Server error', error: err.message })
   }
 }
 
@@ -28,7 +29,8 @@ const login = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' })
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } })
   } catch (err) {
-    res.status(500).json({ message: 'Server error' })
+    console.error('Login error details:', err)
+    res.status(500).json({ message: 'Server error', error: err.message })
   }
 }
 
@@ -40,7 +42,8 @@ const getProfile = async (req, res) => {
     })
     res.json(user)
   } catch (err) {
-    res.status(500).json({ message: 'Server error' })
+    console.error('GetProfile error details:', err)
+    res.status(500).json({ message: 'Server error', error: err.message })
   }
 }
 
